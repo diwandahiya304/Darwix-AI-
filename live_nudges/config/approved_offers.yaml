@@ -1,0 +1,46 @@
+# Config-driven cross-sell trigger -> approved offer mapping. Only offers
+# listed here are ever suggested by a nudge — this is the same
+# never-invent posture as the Q1/Q3 KB grounding rule (CLAUDE.md §6),
+# applied to nudge content: a nudge must point at a real, approved
+# product, not something the pipeline made up.
+#
+# `customer_trigger_phrases`: any of these in a customer utterance opens
+# a cross-sell opportunity for this `topic`.
+# `agent_offer_phrases`: any of these in a later agent utterance counts
+# as the agent having actually made the offer (closes the opportunity).
+
+offers:
+  - topic: "cross_sell:family_floater"
+    customer_trigger_phrases:
+      - "spouse"
+      - "my wife"
+      - "my husband"
+      - "my kids"
+      - "my children"
+    agent_offer_phrases:
+      - "family floater"
+      - "family plan"
+      - "add your spouse"
+      - "add your family"
+    offer_name: "Family Floater Plan"
+
+  - topic: "cross_sell:multi_policy"
+    customer_trigger_phrases:
+      - "second vehicle"
+      - "another car"
+      - "bought a second vehicle"
+    agent_offer_phrases:
+      - "multi-policy"
+      - "multi policy"
+      - "bundle"
+    offer_name: "Multi-Policy Bundle"
+
+  - topic: "cross_sell:senior_citizen_plan"
+    customer_trigger_phrases:
+      - "my parents"
+      - "aging parents"
+    agent_offer_phrases:
+      - "senior citizen plan"
+      - "parents' policy"
+      - "parents policy"
+    offer_name: "Senior Citizen Plan"

@@ -1,0 +1,109 @@
+# Pinned dependencies (Python 3.11). Install with `make setup` (uses uv if
+# available, else pip). Add new dependencies here with an exact pin and
+# record the reason in docs/DECISIONS.md — see CLAUDE.md §1.
+#
+# Only direct dependencies are pinned here (not a full transitive lockfile);
+# pip resolves compatible transitive versions at install time. Each entry
+# was installed and import-verified in this repo's own .venv before being
+# added — see docs/DECISIONS.md for why each one was chosen.
+
+# --- Core app stack ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.13.5
+pydantic-settings==2.7.1
+python-dotenv==1.0.1
+
+# --- Testing ---
+pytest==8.3.4
+httpx==0.28.1
+
+# --- kb/ ingestion: extraction ---
+beautifulsoup4==4.15.0
+lxml==6.1.3
+trafilatura==2.2.0
+pdfplumber==0.11.10
+pymupdf==1.28.2          # used only to rasterize a PDF page for the OCR fallback
+pillow==12.3.0
+pytesseract==0.3.13      # requires the Tesseract OCR binary on PATH; soft-fails if absent
+
+# --- kb/ ingestion: cleaning / standardization ---
+# Near-duplicate detection is exact pairwise Jaccard over shingle sets
+# (kb/app/ingest/dedupe.py) — no MinHash/LSH library. datasketch eagerly
+# imports scipy at package-import time regardless of version; not worth
+# the dependency for this corpus's scale. See docs/DECISIONS.md.
+pyyaml==6.0.3            # terminology.yaml / taxonomy.yaml config
+python-dateutil==2.9.0.post0
+
+# --- kb/ ingestion: PII detection ---
+# numpy is pinned explicitly (not just left to transitive resolution):
+# scipy/scikit-learn (pulled in by torch/transformers below) require
+# numpy>=2.0, while the *original* spacy/thinc pins here required
+# numpy<2.0 — a real conflict, resolved by upgrading spacy/thinc/the
+# spaCy model to their numpy2-compatible releases rather than fighting to
+# keep numpy<2.0 against libraries that have already moved on. See
+# docs/DECISIONS.md.
+numpy==2.4.6
+presidio-analyzer==2.2.364
+presidio-anonymizer==2.2.364
+spacy==3.8.16
+en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+
+# --- kb/ ingestion: synthetic test data generation ---
+fpdf2==2.8.9
+
+# --- kb/ retrieval: embeddings ---
+# Direct transformers+torch (mean-pooling + L2-normalize, per the E5
+# model card), NOT the `sentence-transformers` wrapper: the installed
+# sentence-transformers==6.1.0 has a reproducible bug loading this
+# model's pooling config (`Pooling.__init__() missing 1 required
+# positional argument: 'embedding_dimension'`) — see docs/DECISIONS.md.
+# CPU-only torch build; add `--extra-index-url
+# https://download.pytorch.org/whl/cpu` if a different platform resolves
+# a CUDA build instead.
+torch==2.14.0
+transformers==5.17.0
+
+# --- kb/ retrieval: vector store (swappable via VECTOR_STORE_BACKEND) ---
+chromadb==1.5.9
+qdrant-client==1.19.1
+
+# --- kb/ retrieval: lexical search (hybrid dense+BM25) ---
+rank-bm25==0.2.2
+
+# --- voice_agent/: sim/chat_sim.py --mode llm ---
+# Lightweight REST-based SDK, no heavy transitive deps — only OpenAI's
+# competing pattern (LLM_PROVIDER=openai) is left unimplemented in code;
+# see docs/DECISIONS.md.
+anthropic==1.9.0
+
+# --- multilingual/asr_bench/ and live_nudges/: WER/CER computation ---
+# Was already imported and used by multilingual/asr_bench/metrics.py but
+# missing from this file — a gap found during the final-submission
+# dependency audit and fixed here (CLAUDE.md §1: every dependency must be
+# pinned here, none left implicit). live_nudges/scripts/
+# compute_asr_accuracy.py also uses it for Q4's real (not illustrative)
+# ASR WER measurement.
+jiwer==4.0.0
+
+# --- live_nudges/: real streaming ASR + real TTS-generated test audio ---
+# faster-whisper is the "fallback: faster-whisper chunked streaming" path
+# explicitly allowed for Q4 — no Deepgram/Azure credentials exist in this
+# environment (same constraint as multilingual/asr_bench/), but this is a
+# real local model doing real inference on real audio, not a mock. Model
+# weights (tiny.en, ~75MB) download once from Hugging Face Hub and cache
+# locally. See docs/DECISIONS.md for why numpy-array input is used
+# instead of file-path input (a PyAV/faster-whisper version mismatch
+# breaks its own file-decoding path in this environment; feeding it the
+# same float32 PCM arrays the streaming chunker already produces sidesteps
+# the bug and is the correct shape for streaming anyway).
+faster-whisper==1.2.1
+soundfile==0.14.0
+# pyttsx3 (SAPI5 on Windows) generates the 4 required scripted-scenario
+# test call audios locally, fully offline, with 2 distinct system voices
+# for agent/customer — no TTS provider credentials needed. See
+# docs/DECISIONS.md for why this was chosen over Azure/ElevenLabs (same
+# no-live-credentials constraint as multilingual/README.md's TTS section).
+pyttsx3==2.99
+# make q4-report's P50/P95/max latency chart.
+matplotlib==3.11.2

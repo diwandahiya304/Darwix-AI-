@@ -1,0 +1,75 @@
+# Retrieval test harness queries — kb/eval/run_eval.py runs these against
+# the live retrieval index and writes
+# docs/q2_kb/retrieval_test_results.{md,json} (hit@1, hit@3, out-of-scope
+# rejection rate, per-query verdicts).
+#
+# Every in-scope query's `expected_contains` substring was checked against
+# this KB's actual stored record content (data/processed/kb_records.jsonl)
+# before being written here, not guessed — if a future re-ingestion
+# rewords a record, some of these may need updating too.
+
+queries:
+  - query: "what is the waiting period for pre-existing disease cover"
+    category: faq
+    expected_grounded: true
+    expected_contains: "waiting period for pre existing disease claims is"
+
+  - query: "can I add my spouse to the policy"
+    category: faq
+    expected_grounded: true
+    expected_contains: "spouse and dependent children"
+
+  - query: "I already had a claim rejected by another insurer, will you cover me"
+    category: faq
+    expected_grounded: true
+    expected_contains: "full disclosure of pre existing disease history"
+
+  - query: "what support do branch partners get"
+    category: product
+    expected_grounded: true
+    expected_contains: "relationship manager"
+
+  - query: "what is the sum assured for the gold plan"
+    category: policy
+    expected_grounded: true
+    expected_contains: "Gold"
+
+  - query: "am I eligible if I am 70 years old"
+    category: eligibility_qualification
+    expected_grounded: true
+    expected_contains: "18 and 65 years old"
+
+  - query: "do I need a medical checkup for a large sum assured"
+    category: eligibility_qualification
+    expected_grounded: true
+    expected_contains: "pre-policy medical checkup"
+
+  - query: "why is the premium higher than competitors"
+    category: objection_handling
+    expected_grounded: true
+    expected_contains: "network hospitals"
+
+  - query: "I already have coverage through my employer, why buy this policy"
+    category: objection_handling
+    expected_grounded: true
+    expected_contains: "continues independently"
+
+  - query: "how long does claim settlement take"
+    category: process
+    expected_grounded: true
+    expected_contains: "working days"
+
+  - query: "what disclosures must the agent make before selling the policy"
+    category: compliance_disclosure
+    expected_grounded: true
+    expected_contains: "free-look period"
+
+  - query: "what is the weather like in Mumbai today"
+    category: out_of_scope
+    expected_grounded: false
+    expected_contains: null
+
+  - query: "can you help me file my income tax return"
+    category: out_of_scope
+    expected_grounded: false
+    expected_contains: null

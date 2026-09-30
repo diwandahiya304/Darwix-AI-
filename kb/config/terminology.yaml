@@ -1,0 +1,56 @@
+# Terminology map: canonical_term -> [synonyms found in source content].
+# Loaded by kb.app.ingest.standardize.load_terminology_map(). Every
+# synonym is rewritten to its canonical term during standardization so the
+# voice agent never sees "sum assured" in one record and "cover amount" in
+# another for the same concept. Add new entries here (not in code) as new
+# source content surfaces new synonyms.
+
+sum_assured:
+  - sum assured
+  - cover amount
+  - coverage amount
+  - sum insured
+
+premium:
+  - premium
+  - premium amount
+
+policyholder:
+  - policyholder
+  - policy holder
+  - insured person
+
+waiting_period:
+  - waiting period
+  - cooling period
+  - moratorium period
+
+pre_existing_disease:
+  - pre-existing disease
+  - pre existing condition
+  - ped
+
+claim_settlement_ratio:
+  - claim settlement ratio
+  - claim settlement rate
+  - csr
+
+tenor:
+  - tenor
+  - tenure
+  - loan term
+
+emi:
+  - emi
+  - equated monthly installment
+  - monthly installment
+
+foreclosure:
+  - foreclosure
+  - prepayment
+  - early closure
+
+processing_fee:
+  - processing fee
+  - origination fee
+  - loan processing charge

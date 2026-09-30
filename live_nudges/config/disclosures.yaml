@@ -1,0 +1,42 @@
+# Required disclosures and risky-statement phrases, config-driven per
+# CLAUDE.md §11 ("don't hardcode KB content into a system prompt" — same
+# spirit applies here: compliance content belongs in config/the KB, not
+# buried in app/signals_fast.py's Python).
+#
+# `stage_trigger_phrases`: once the agent says any of these, the call has
+# reached the stage where a disclosure should already have been given —
+# if it hasn't, that's a missing-disclosure compliance risk.
+# `disclosure_phrases`: saying any of these counts as having given the
+# disclosure.
+# `risky_phrases`: saying any of these is an immediate compliance risk,
+# regardless of call stage (an oversold guarantee is never okay).
+
+disclosure_phrases:
+  - "free-look period"
+  - "free look period"
+  - "cooling-off period"
+  - "cooling off period"
+  - "grievance redressal"
+  - "terms and conditions"
+
+# Kept short and single-clause rather than long exact phrases —
+# real (whisper) transcription can garble a word mid-window (e.g.
+# "proceed" -> "prop-" was observed splitting across a fixed ASR
+# window boundary), so a shorter, more robust trigger phrase is more
+# reliable than a long one requiring every word to land correctly.
+# See docs/DECISIONS.md.
+stage_trigger_phrases:
+  - "is there anything else"
+  - "thank you for your time"
+  - "have a great day"
+  - "proceed with the payment"
+  - "process the payment"
+  - "let's finalize"
+  - "go ahead and process"
+
+risky_phrases:
+  - "guaranteed returns"
+  - "100% guaranteed"
+  - "definitely approved"
+  - "no need to worry about the terms"
+  - "i can promise you"

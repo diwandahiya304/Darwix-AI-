@@ -1,0 +1,117 @@
+{
+  "generated_at": "2026-09-30T11:15:37Z",
+  "hit_at_1": 1.0,
+  "hit_at_3": 1.0,
+  "out_of_scope_rejection_rate": 1.0,
+  "latency_ms_p50": 74.14229999994859,
+  "latency_ms_p95": 103.38080000656191,
+  "kb_min_relevance_score": 0.84,
+  "embedding_model": "intfloat/multilingual-e5-small",
+  "vector_store_backend": "chroma",
+  "rows": [
+    {
+      "query": "what is the waiting period for pre-existing disease cover",
+      "category": "faq",
+      "retrieved": "Health Insurance Faq: Q: What is the waiting period for pre existing disease cover? A: The waiting period for pre existing disease claims is 24 months from the policy start date of 2023-04-01.",
+      "source_ref": "raw/web/faq_health_insurance.html",
+      "explanation": "Expected content found in the #1 result.",
+      "verdict": "correct"
+    },
+    {
+      "query": "can I add my spouse to the policy",
+      "category": "faq",
+      "retrieved": "Health Insurance Faq: Q: Can I add my spouse and children to the same policy? A: Yes, spouse and dependent children up to 25 years old can be added as family members on the same floater policy.",
+      "source_ref": "raw/web/faq_health_insurance.html",
+      "explanation": "Expected content found in the #1 result.",
+      "verdict": "correct"
+    },
+    {
+      "query": "I already had a claim rejected by another insurer, will you cover me",
+      "category": "faq",
+      "retrieved": "Health Insurance Faq: Q: I already have a claim rejected elsewhere, will you still cover me? A: Coverage eligibility depends on full disclosure of pre existing disease history at the time of proposal.",
+      "source_ref": "raw/web/faq_health_insurance.html",
+      "explanation": "Expected content found in the #1 result.",
+      "verdict": "correct"
+    },
+    {
+      "query": "what support do branch partners get",
+      "category": "product",
+      "retrieved": "Branch Partnership Benefits: Operational, marketing, and technology support is provided to branch partners. Branch partners receive a dedicated relationship manager and quarterly performance reviews. ",
+      "source_ref": "raw/web/product_partnership_benefits.html",
+      "explanation": "Expected content found in the #1 result.",
+      "verdict": "correct"
+    },
+    {
+      "query": "what is the sum assured for the gold plan",
+      "category": "policy",
+      "retrieved": "Policy Terms: SYNTHETIC TEST DATA -- fabricated policy terms, no real customer data. Policy Terms and Conditions This policy provides sum assured up to INR 1,000,000 subject to the waiting period defi",
+      "source_ref": "raw/pdfs/policy_terms.pdf",
+      "explanation": "Expected content found in the #1 result.",
+      "verdict": "correct"
+    },
+    {
+      "query": "am I eligible if I am 70 years old",
+      "category": "eligibility_qualification",
+      "retrieved": "Eligibility and Qualification Rules: Applicant must be between 18 and 65 years old at the time of proposal.",
+      "source_ref": "raw/web/eligibility_qualification_rules.html",
+      "explanation": "Expected content found in the #1 result.",
+      "verdict": "correct"
+    },
+    {
+      "query": "do I need a medical checkup for a large sum assured",
+      "category": "eligibility_qualification",
+      "retrieved": "Eligibility and Qualification Rules: Sum assured requested above INR 2,000,000 requires a pre-policy medical checkup.",
+      "source_ref": "raw/web/eligibility_qualification_rules.html",
+      "explanation": "Expected content found in the #1 result.",
+      "verdict": "correct"
+    },
+    {
+      "query": "why is the premium higher than competitors",
+      "category": "objection_handling",
+      "retrieved": "Objection Handling -- Health Insurance: Objection: Your premium is higher than what competitors quote for a similar sum assured. Response: Our sum assured includes cashless hospitalization across 10,0",
+      "source_ref": "raw/web/objection_handling_health_insurance.html",
+      "explanation": "Expected content found in the #1 result.",
+      "verdict": "correct"
+    },
+    {
+      "query": "I already have coverage through my employer, why buy this policy",
+      "category": "objection_handling",
+      "retrieved": "Objection Handling -- Health Insurance: Objection: I already have health coverage through my employer, so I do not need my own policy. Response: Employer-provided cover usually ends when employment en",
+      "source_ref": "raw/web/objection_handling_health_insurance.html",
+      "explanation": "Expected content found in the #1 result.",
+      "verdict": "correct"
+    },
+    {
+      "query": "how long does claim settlement take",
+      "category": "process",
+      "retrieved": "Claim Filing Process \u2014 Step 3: Settlement: Cashless claims at network hospitals are typically settled directly with the hospital within 2 to 4 hours of document submission; reimbursement claims at non",
+      "source_ref": "raw/web/process_claim_filing.html",
+      "explanation": "Expected content found in the #1 result.",
+      "verdict": "correct"
+    },
+    {
+      "query": "what disclosures must the agent make before selling the policy",
+      "category": "compliance_disclosure",
+      "retrieved": "Compliance Disclosure Requirements: Agents must state the free-look period of 15 days before the customer confirms purchase, during which the policy can be cancelled for a full refund minus a small ad",
+      "source_ref": "raw/web/compliance_disclosure_requirements.html",
+      "explanation": "Expected content found in the #1 result.",
+      "verdict": "correct"
+    },
+    {
+      "query": "what is the weather like in Mumbai today",
+      "category": "out_of_scope",
+      "retrieved": "Eligibility Form: SYNTHETIC TEST DATA -- fabricated eligibility form, no real customer data. Health Insurance Eligibility Form Applicant Name: [PERSON]: [PHONE] Email Address: [EMAIL] PAN Number: [PAN",
+      "source_ref": "raw/pdfs/eligibility_form.pdf#page=1",
+      "explanation": "Correctly rejected as out-of-scope (no grounded answer returned).",
+      "verdict": "correct"
+    },
+    {
+      "query": "can you help me file my income tax return",
+      "category": "out_of_scope",
+      "retrieved": "Health Insurance Faq: Q: Can I add my spouse and children to the same policy? A: Yes, spouse and dependent children up to 25 years old can be added as family members on the same floater policy.",
+      "source_ref": "raw/web/faq_health_insurance.html",
+      "explanation": "Correctly rejected as out-of-scope (no grounded answer returned).",
+      "verdict": "correct"
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>live_nudges dashboard</title>
+<style>
+  body { font-family: -apple-system, Segoe UI, Arial, sans-serif; margin: 0; background: #0f1115; color: #e6e6e6; }
+  header { padding: 12px 20px; background: #171a21; display: flex; gap: 12px; align-items: center; border-bottom: 1px solid #2a2e38; }
+  header select, header button { padding: 6px 10px; font-size: 14px; }
+  main { display: flex; height: calc(100vh - 54px); }
+  .col { padding: 16px; overflow-y: auto; }
+  #transcript-col { flex: 2; border-right: 1px solid #2a2e38; }
+  #nudges-col { flex: 1; }
+  .line { margin-bottom: 8px; padding: 6px 10px; border-radius: 6px; }
+  .line.agent { background: #1c2333; }
+  .line.customer { background: #24231c; }
+  .line .speaker { font-weight: 600; text-transform: uppercase; font-size: 11px; opacity: 0.7; }
+  .line.partial { opacity: 0.55; font-style: italic; }
+  #meter-wrap { margin-bottom: 16px; }
+  #meter-bar { height: 10px; background: #2a2e38; border-radius: 5px; overflow: hidden; }
+  #meter-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #3ddc84, #e6c34a, #e6503d); transition: width 0.3s; }
+  .nudge { border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; border-left: 5px solid #666; background: #171a21; }
+  .nudge.critical { border-left-color: #e6503d; }
+  .nudge.high { border-left-color: #e6c34a; }
+  .nudge.normal { border-left-color: #3d8ee6; }
+  .nudge .priority-tag { font-size: 10px; text-transform: uppercase; font-weight: 700; opacity: 0.8; }
+  .nudge .countdown { font-size: 11px; opacity: 0.6; float: right; }
+  .nudge .evidence { font-size: 12px; opacity: 0.6; margin-top: 4px; }
+  #suppressed-toggle { cursor: pointer; text-decoration: underline; font-size: 13px; opacity: 0.7; margin-top: 16px; display: inline-block; }
+  #suppressed-log { display: none; margin-top: 8px; font-size: 12px; opacity: 0.7; }
+  #suppressed-log div { margin-bottom: 4px; }
+  #status { font-size: 13px; opacity: 0.7; }
+</style>
+</head>
+<body>
+<header>
+  <strong>live_nudges</strong>
+  <select id="scenario-select"></select>
+  <button id="start-btn">Start</button>
+  <span id="status">idle</span>
+</header>
+<main>
+  <div id="transcript-col" class="col">
+    <div id="meter-wrap">
+      <div style="font-size:12px; opacity:0.7; margin-bottom:4px;">Frustration</div>
+      <div id="meter-bar"><div id="meter-fill"></div></div>
+    </div>
+    <div id="transcript"></div>
+  </div>
+  <div id="nudges-col" class="col">
+    <div style="font-size:13px; opacity:0.7; margin-bottom:8px;">Active nudges</div>
+    <div id="nudges"></div>
+    <span id="suppressed-toggle">show suppressed log</span>
+    <div id="suppressed-log"></div>
+  </div>
+</main>
+<script>
+const transcriptEl = document.getElementById('transcript');
+const nudgesEl = document.getElementById('nudges');
+const suppressedEl = document.getElementById('suppressed-log');
+const statusEl = document.getElementById('status');
+const meterFill = document.getElementById('meter-fill');
+const activeNudges = new Map();
+
+async function loadScenarios() {
+  const res = await fetch('/scenarios');
+  const scenarios = await res.json();
+  const select = document.getElementById('scenario-select');
+  select.innerHTML = scenarios.map(s => `<option value="${s}">${s}</option>`).join('');
+}
+
+document.getElementById('start-btn').onclick = async () => {
+  const scenario_id = document.getElementById('scenario-select').value;
+  statusEl.textContent = 'starting ' + scenario_id + '...';
+  const res = await fetch('/start', {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({scenario_id, speed: 1.0}),
+  });
+  const body = await res.json();
+  statusEl.textContent = body.error ? ('error: ' + body.error) : ('running ' + scenario_id);
+};
+
+function addTranscriptLine(segment) {
+  const div = document.createElement('div');
+  div.className = 'line ' + segment.speaker + (segment.is_final ? '' : ' partial');
+  div.innerHTML = `<span class="speaker">${segment.speaker}</span> ${segment.text || '...'}`;
+  transcriptEl.appendChild(div);
+  transcriptEl.scrollTop = transcriptEl.scrollHeight;
+  if (segment.speaker === 'customer' && segment.is_final) {
+    // crude live proxy: keyword-free visual cue only, real score comes from nudges
+  }
+}
+
+function renderNudge(nudge) {
+  const el = document.createElement('div');
+  el.className = 'nudge ' + nudge.priority;
+  el.id = 'nudge-' + nudge.nudge_id;
+  el.innerHTML = `
+    <span class="priority-tag">${nudge.priority}</span>
+    <span class="countdown"></span>
+    <div>${nudge.message}</div>
+    <div class="evidence">"${nudge.evidence_text}" (conf ${(nudge.confidence*100).toFixed(0)}%, ${nudge.layer})</div>
+  `;
+  nudgesEl.prepend(el);
+  if (nudge.signal_type === 'frustration') {
+    meterFill.style.width = Math.min(100, nudge.confidence * 100) + '%';
+  }
+  activeNudges.set(nudge.nudge_id, nudge);
+}
+
+function tickCountdowns() {
+  const now = Date.now();
+  for (const [id, nudge] of activeNudges.entries()) {
+    const el = document.getElementById('nudge-' + id);
+    if (!el) continue;
+    const remaining = Math.max(0, Math.round((nudge.expires_at_ms - now) / 1000));
+    el.querySelector('.countdown').textContent = remaining > 0 ? (remaining + 's') : 'expired';
+    if (remaining <= 0) { el.style.opacity = 0.35; activeNudges.delete(id); }
+  }
+}
+setInterval(tickCountdowns, 1000);
+
+function connectWebSocket() {
+  const ws = new WebSocket(`ws://${location.host}/ws`);
+  ws.onmessage = (msg) => {
+    const event = JSON.parse(msg.data);
+    if (event.type === 'segment') addTranscriptLine(event.data);
+    else if (event.type === 'nudge') renderNudge(event.data);
+    else if (event.type === 'suppressed') {
+      const div = document.createElement('div');
+      div.textContent = `[suppressed] ${event.data.topic} (conf ${(event.data.confidence*100).toFixed(0)}%) — ${event.data.reason}`;
+      suppressedEl.appendChild(div);
+    } else if (event.type === 'call_ended') {
+      statusEl.textContent = 'call ended: ' + event.data.scenario_id;
+    }
+  };
+  ws.onclose = () => setTimeout(connectWebSocket, 1000);
+}
+
+document.getElementById('suppressed-toggle').onclick = () => {
+  const log = document.getElementById('suppressed-log');
+  log.style.display = log.style.display === 'none' ? 'block' : 'none';
+};
+
+loadScenarios();
+connectWebSocket();
+</script>
+</body>
+</html>

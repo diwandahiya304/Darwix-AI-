@@ -1,0 +1,16 @@
+# Fixed category taxonomy. kb.app.ingest.standardize.canonicalize_category()
+# maps a raw source-derived category hint onto one of these, falling back
+# to "uncategorized" if nothing matches even loosely. Extend this list
+# deliberately — an uncontrolled, ever-growing category set defeats the
+# point of a taxonomy.
+
+categories:
+  - product
+  - policy
+  - eligibility_qualification
+  - faq
+  - objection_handling
+  - process
+  - compliance_disclosure
+  - escalation
+  - uncategorized

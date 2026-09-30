@@ -1,0 +1,17 @@
+# Fallback messages shown when search_knowledge_base returns
+# grounded=false — one per register (see multilingual/common/register.py).
+# The bot must NEVER switch to English unexpectedly (Q3 general
+# requirement), so both variants stay in Taglish, matching how the rest
+# of this market's content is written.
+#
+# LINGUISTIC REVIEW NEEDED: drafted by an AI system, not reviewed by a
+# native speaker — see docs/q3_multilingual/gaps.md.
+
+formal: >-
+  Paumanhin po, wala pa po kaming impormasyon tungkol diyan sa ngayon.
+  Maaari ko po kayong ikonekta sa isang specialist o mag-schedule ng
+  callback — alin po ang mas gusto ninyo?
+
+colloquial: >-
+  Sorry ha, wala pa kaming info diyan ngayon. Pwede kitang i-connect sa
+  specialist o mag-schedule tayo ng callback — alin gusto mo?

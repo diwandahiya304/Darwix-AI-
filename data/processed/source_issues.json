@@ -1,0 +1,8 @@
+[
+  {
+    "file": "raw/pdfs/policy_terms.pdf",
+    "location": "page_2",
+    "issue_type": "extraction_failed",
+    "description": "No embedded text/tables, and OCR was unavailable or produced nothing."
+  }
+]

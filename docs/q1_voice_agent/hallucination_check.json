@@ -1,0 +1,55 @@
+{
+  "pass_rate": 0.875,
+  "passed": 7,
+  "total": 8,
+  "rows": [
+    {
+      "question": "What is the claim settlement ratio for your term life insurance product?",
+      "grounded": true,
+      "top_category": "policy",
+      "refused_correctly": false
+    },
+    {
+      "question": "Can I pay my premium using cryptocurrency?",
+      "grounded": false,
+      "top_category": null,
+      "refused_correctly": true
+    },
+    {
+      "question": "Do you offer coverage for cosmetic surgery?",
+      "grounded": false,
+      "top_category": null,
+      "refused_correctly": true
+    },
+    {
+      "question": "What is your company's IRDAI registration number?",
+      "grounded": false,
+      "top_category": null,
+      "refused_correctly": true
+    },
+    {
+      "question": "Is there a tax deduction under Section 80D for this policy?",
+      "grounded": false,
+      "top_category": null,
+      "refused_correctly": true
+    },
+    {
+      "question": "Can I switch from this policy to a competitor's policy without a new waiting period?",
+      "grounded": false,
+      "top_category": null,
+      "refused_correctly": true
+    },
+    {
+      "question": "What happens if I miss a single premium payment by one day?",
+      "grounded": false,
+      "top_category": null,
+      "refused_correctly": true
+    },
+    {
+      "question": "Do you offer international coverage for treatment abroad?",
+      "grounded": false,
+      "top_category": null,
+      "refused_correctly": true
+    }
+  ]
+}

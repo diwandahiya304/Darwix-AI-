@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-09-30T11:13:00.846296+00:00",
+  "counts": {
+    "docs_in": 20,
+    "chunks_out": 54,
+    "exact_duplicates_removed": 0,
+    "near_duplicates_removed": 1,
+    "extraction_failures": 1,
+    "pii_records": 11,
+    "records_versioned": 0
+  },
+  "pii_counts_by_type": {
+    "EMAIL": 3,
+    "PAN": 2,
+    "AADHAAR": 2,
+    "PHONE": 2,
+    "PERSON": 2
+  },
+  "examples": [
+    {
+      "source_id": "25062bf54e9fc77d",
+      "before": "SYNTHETIC TEST DATA -- fabricated eligibility form, no real customer data.\nHealth Insurance Eligibility Form\nApplicant Name: Sunita Rao\nContact Phone: 9123456780\nEmail Address: sunita.rao@example.com\nPAN Number: BXPRA5678K\nAadhaar Number: 9876-5432-1098\nDate Of Birth: 12-08-1990\nQualification Rules: Applicant must be between 18 and 65 years old with no declined claims in the last 3\nyears.",
+      "after": "SYNTHETIC TEST DATA -- fabricated eligibility form, no real customer data.\nHealth Insurance Eligibility Form\nApplicant Name: [PERSON]: [PHONE]\nEmail Address: [EMAIL]\nPAN Number: [PAN]\nAadhaar Number: [AADHAAR]\nDate Of Birth: 1990-08-12\nQualification Rules: Applicant must be between 18 and 65 years old with no declined claims in the last 3\nyears.",
+      "note": "category=eligibility_qualification, source_type=form, language=en, pii=True"
+    },
+    {
+      "source_id": "780b1809e1291d28",
+      "before": "# Compliance Disclosure Requirements\n\nDapat ipaalam sa customer sa simula ng tawag na ito po ay nire-record para sa quality assurance at training purposes.\n\nDapat munang kumpirmahin ang pagkakakilanlan ng customer, tulad ng buong pangalan at petsa ng kapanganakan o policy number, bago talakayin ang anumang detalye ng kanilang policy.\n\nBawal pong ibahagi ang detalye ng policy, halaga ng premium, o katayuan ng bayad sa ibang tao maliban sa may-ari mismo ng account o sa awtorisadong kinatawan nito, alinsunod sa Data Privacy Act.\n\nKung tatanggihan po ng customer na tumuloy sa tawag o magbigay ng k",
+      "after": "# Compliance Disclosure Requirements\nDapat ipaalam sa customer sa simula ng tawag na ito po ay nire-record para sa quality assurance at training purposes.\nDapat munang kumpirmahin ang pagkakakilanlan ng customer, tulad ng buong pangalan at petsa ng kapanganakan o policy number, bago talakayin ang anumang detalye ng kanilang policy.\nBawal pong ibahagi ang detalye ng policy, halaga ng premium, o katayuan ng bayad sa ibang tao maliban sa may-ari mismo ng account o sa awtorisadong kinatawan nito, alinsunod sa Data Privacy Act.\nKung tatanggihan po ng customer na tumuloy sa tawag o magbigay ng karag",
+      "note": "category=compliance_disclosure, source_type=website, language=fil, pii=False"
+    },
+    {
+      "source_id": "1f6f750c3f03b4ba",
+      "before": "# Compliance Disclosure OJK Conduct\n\nPetugas penagihan dilarang mengancam, mempermalukan, atau menggunakan kata-kata kasar kepada nasabah dalam bentuk apa pun, baik secara langsung maupun tersirat.\n\nPetugas dilarang mengungkapkan informasi tunggakan atau utang nasabah kepada pihak ketiga yang tidak berwenang, termasuk keluarga, tetangga, rekan kerja, atau atasan nasabah.\n\nPenagihan hanya boleh dilakukan pada pukul 08.00 sampai 20.00 waktu setempat nasabah, dan tidak boleh dilakukan pada hari libur nasional kecuali disetujui oleh nasabah.\n\nSetiap petugas penagihan wajib menyebutkan identitas re",
+      "after": "# Compliance Disclosure OJK Conduct\nPetugas penagihan dilarang mengancam, mempermalukan, atau menggunakan kata-kata kasar kepada nasabah dalam bentuk apa pun, baik secara langsung maupun tersirat.\nPetugas dilarang mengungkapkan informasi tunggakan atau utang nasabah kepada pihak ketiga yang tidak berwenang, termasuk keluarga, tetangga, rekan kerja, atau atasan nasabah.\nPenagihan hanya boleh dilakukan pada pukul 08.00 sampai 20.00 waktu setempat nasabah, dan tidak boleh dilakukan pada hari libur nasional kecuali disetujui oleh nasabah.\nSetiap petugas penagihan wajib menyebutkan identitas resmi ",
+      "note": "category=compliance_disclosure, source_type=website, language=id, pii=False"
+    }
+  ]
+}

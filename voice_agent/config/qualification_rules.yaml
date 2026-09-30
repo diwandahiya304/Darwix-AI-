@@ -1,0 +1,62 @@
+# Lead qualification rules for score_lead() (voice_agent/app/scoring.py).
+# Loaded at runtime — never hardcoded in Python and never put in the
+# voice agent's system prompt (CLAUDE.md / assignment brief: qualification
+# logic lives in code, not the prompt). Tune thresholds here without
+# touching code or the prompt.
+
+age:
+  min_insurable: 18   # below this: cold — product isn't sold to minors
+  ideal_max: 55        # [min_insurable, ideal_max]: no age penalty
+  max_standard: 65     # (ideal_max, max_standard]: warm — senior underwriting applies
+                        # above max_standard: cold — outside standard underwriting
+
+budget:
+  # Monthly budget in INR the customer states they can afford.
+  min_viable: 500      # below this: cold — product doesn't fit at any tier
+  comfortable: 1500    # at/above this: no budget penalty
+
+family_size:
+  cross_sell_threshold: 3   # family_size >= this: bonus (floater/cross-sell potential)
+
+conditions:
+  # Self-reported pre-existing conditions (free text from the call,
+  # matched case-insensitively as substrings). Red-flag conditions need
+  # medical underwriting and lower the temperature; neutral conditions are
+  # still coverable per the KB's waiting-period rules and don't count
+  # against the lead.
+  red_flags:
+    - cancer
+    - kidney failure
+    - heart surgery
+    - stroke
+  neutral:
+    - diabetes
+    - hypertension
+    - thyroid
+    - asthma
+
+intent:
+  positive: [interested, ready_to_buy, wants_quote, ready to buy, wants quote]
+  neutral: [exploring, comparing, thinking about it]
+  negative: [not_interested, just_researching, declined, not interested, just researching]
+
+points:
+  age_ideal: 1
+  age_senior: 0
+  age_out_of_range: -3       # hard override toward cold
+  budget_comfortable: 1
+  budget_viable: 0
+  budget_too_low: -3         # hard override toward cold
+  family_cross_sell: 1
+  condition_red_flag: -1
+  condition_neutral_or_none: 0
+  intent_positive: 2
+  intent_neutral: 0
+  intent_negative: -3        # hard override toward cold
+  missing_field_penalty: 0   # missing info doesn't penalize — it's a fallback-conversation
+                             # concern (ask once more, then move on), not a scoring concern
+
+thresholds:
+  hot_min_points: 3
+  warm_min_points: 1
+  # total < warm_min_points -> cold

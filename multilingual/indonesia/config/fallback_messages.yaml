@@ -1,0 +1,16 @@
+# Fallback messages shown when search_knowledge_base returns
+# grounded=false — one per register (see multilingual/common/register.py).
+# The bot must NEVER switch to English unexpectedly (Q3 general
+# requirement).
+#
+# LINGUISTIC REVIEW NEEDED: drafted by an AI system, not reviewed by a
+# native speaker — see docs/q3_multilingual/gaps.md.
+
+formal: >-
+  Mohon maaf, Bapak/Ibu, saya belum memiliki informasi tersebut saat
+  ini. Saya bisa menghubungkan Bapak/Ibu dengan tim spesialis, atau
+  menjadwalkan panggilan balik — mana yang lebih Bapak/Ibu inginkan?
+
+colloquial: >-
+  Maaf ya Kak, aku belum ada info soal itu sekarang. Aku bisa sambungin
+  ke tim khusus, atau kita atur telepon balik aja — gimana enaknya?

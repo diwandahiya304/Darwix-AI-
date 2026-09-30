@@ -1,0 +1,70 @@
+{
+  "mean_wer": 0.449,
+  "mean_cer": 0.229,
+  "rows": [
+    {
+      "scenario_id": "a_missed_cross_sell",
+      "speaker": "agent",
+      "wer": 0.468,
+      "cer": 0.272,
+      "reference": "Hi, this is Asha calling about your health insurance renewal. Got it. Let's first confirm your renewal premium is twelve thousand rupees for the year. Noted. Your renewal is confirmed for the twelve thousand rupee premium. Great, is there anything else I can help you with today?",
+      "hypothesis": "Hi, this is Asha calling a your health insurance renewal. You You Good. Let's first confirm you're in will premium is 12,000 rupees for the... here. You You noted your renewal is confirmed for the 12,000 rupee premium. Great. Is there anything else I can help you with? today. You"
+    },
+    {
+      "scenario_id": "a_missed_cross_sell",
+      "speaker": "customer",
+      "wer": 0.471,
+      "cer": 0.194,
+      "reference": "Sure, go ahead. My spouse has actually been asking about coverage too. Okay, and I also just bought a second vehicle recently, for what it's worth. Alright, sounds good. No, that's all, thank you.",
+      "hypothesis": "You You Sure, go ahead. My spouse has actually been asking about coverage too. You You Okay. And I also just bought a second vehicle recently. for what it's worth. You You All right. sounds good. You No. That's all. Thank you."
+    },
+    {
+      "scenario_id": "b_compliance_gap",
+      "speaker": "agent",
+      "wer": 0.366,
+      "cer": 0.263,
+      "reference": "Hi, I'm calling about renewing your policy. This plan offers guaranteed returns, and I can promise you full approval today. Your premium this year comes to fourteen thousand five hundred rupees. Great, shall I go ahead and process the payment now?",
+      "hypothesis": "Hi, I'm calling about renewing your policy. You This plan offers guaranteed return. and I can promise you full of proof. available today. You your premium year comes to 14,500. red rupees. You Great, shall I go ahead and prop- process the payment now."
+    },
+    {
+      "scenario_id": "b_compliance_gap",
+      "speaker": "customer",
+      "wer": 0.7,
+      "cer": 0.314,
+      "reference": "Okay, what's this about exactly? That sounds a bit too good, but alright, go on. Fine, that works for me.",
+      "hypothesis": "You Okay. What's this about exactly? You You That sounds... bit too good, but all right, go. on. You Fine. that works for me. You You"
+    },
+    {
+      "scenario_id": "c_rising_frustration",
+      "speaker": "agent",
+      "wer": 0.393,
+      "cer": 0.16,
+      "reference": "Hi, calling again about your policy renewal reminder. I understand, I just wanted to confirm a few details. I hear you, let me just check one thing quickly.",
+      "hypothesis": "Hi, calling again about your... Policy Renewal Reminder. You I understand. I just wanted to confirm a few details. You I hear you. Let me just check one thing quickly. You You"
+    },
+    {
+      "scenario_id": "c_rising_frustration",
+      "speaker": "customer",
+      "wer": 0.294,
+      "cer": 0.137,
+      "reference": "I think you called about this yesterday too. I already told you I'm not interested, this is getting ridiculous. How many times do I have to say this, I am sick of these calls.",
+      "hypothesis": "You You I think you called about this yesterday too. You I already told you I am not interested. This is getting ridiculous. You How many times do I have to... Say this, I am sick of these calls."
+    },
+    {
+      "scenario_id": "d_noisy_ambiguous",
+      "speaker": "agent",
+      "wer": 0.417,
+      "cer": 0.252,
+      "reference": "Hello, am I speaking with Mister Rao. This is regarding your policy, do you have a moment. Sure, take your time, whenever you're ready.",
+      "hypothesis": "Hello, am I speaking with me? Mr. Ralph. This is Rick. Starting your policy, do you have a moment? Thank you. Sure, take your time. ever you're ready."
+    },
+    {
+      "scenario_id": "d_noisy_ambiguous",
+      "speaker": "customer",
+      "wer": 0.484,
+      "cer": 0.24,
+      "reference": "Umm, yeah, sort of, who is this again. Uh, maybe, I guess, not really sure, hang on a sec. Hmm, okay I guess, not sure what this is even about though.",
+      "hypothesis": "You and them. Yeah, sort of, who is- this again. Maybe I guess, not really sure. Hang on a section. Done. Okay, I guess. Not sure what- this is even about though."
+    }
+  ]
+}
